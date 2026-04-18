@@ -27,9 +27,9 @@ Dosyalar aynı dizinde çalışacak şekilde yapılandırılmıştır:
 
 ## 🛠️ Metodoloji ve Kaynakça
 
-Bu çalışma, **"Siber Güvenlik Sigortalarının Kapsamları Dahilinde Risk Değerlendirmesi"** başlıklı akademik raporu temel almaktadır. 
+Bu çalışma, **"Siber Güvenlik Sigortalarının Kapsamları Dahilinde Risk Değerlendirmesi"** başlıklı çalışmamı temel almaktadır. 
 - **SME Formülü:** $SME = (V \times T \times C) \cdot \alpha$
-- **Veri Kaynağı:** Doküman s.1-12 (2026)
+- **Veri Kaynağı:** Siber Güvenlik Sigortalarının Kapsamları Dahilinde Risk Değerlendirmesi s.1-12 (2026)
 
 ## 👤 Geliştirici
 
