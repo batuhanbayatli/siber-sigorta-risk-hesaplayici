@@ -26,7 +26,7 @@
             </h2>
             <p class="text-sm leading-relaxed text-blue-900">
                 VaR, bir siber kriz anında cüzdanınızdan çıkabilecek <b>"en yüksek tutarı"</b> önceden tahmin etme sanatıdır. 
-                "Başıma bir şey gelirse en fazla ne kadar kaybederim?" sorusunun istatistiksel yanıtıdır. [cite: 58, 59]
+                "Başıma bir şey gelirse en fazla ne kadar kaybederim?" sorusunun istatistiksel yanıtıdır. 
             </p>
         </div>
 
@@ -51,7 +51,7 @@
                     <div id="val_bar" class="risk-bar h-full bg-blue-500" style="width: 0%"></div>
                 </div>
                 <p class="text-[10px] text-slate-400 mt-4 italic">
-                    *Bu hesaplama, %95 güven aralığında dokümanınızdaki <b>Monte Carlo Simülasyonu</b> mantığına dayanır. [cite: 80, 84]
+                    *Bu hesaplama, %95 güven aralığında dokümanınızdaki <b>Monte Carlo Simülasyonu</b> mantığına dayanır. 
                 </p>
             </div>
         </div>
@@ -83,13 +83,10 @@
             const rev = parseFloat(document.getElementById('val_rev').value) || 0;
             const sme = parseFloat(document.getElementById('val_sme').value);
 
-            // Doküman s.9 Örneği Kalibrasyonu: 1M ciro ve 1.2 SME = 2.2M VaR
-            // Formül: SME * Ciro * 1.83 (Sabit Çarpan)
             const varResult = Math.round(rev * sme * 1.83);
             
             document.getElementById('val_res').innerText = "₺" + varResult.toLocaleString('tr-TR');
             
-            // Bar genişliği (Maksimum 5M TL üzerinden görselleştirme)
             const barWidth = Math.min((varResult / 5000000) * 100, 100);
             document.getElementById('val_bar').style.width = barWidth + "%";
         }
