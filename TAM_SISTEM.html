@@ -139,18 +139,13 @@
             const alpha = parseFloat(document.getElementById('alpha').value);
             const revenue = parseFloat(document.getElementById('revenue').value) || 0;
 
-            // DOKÜMAN SAYFA 9: SME HESABI [cite: 78]
             const sme = (v * t * c) * alpha;
             document.getElementById('sme_res').innerText = sme.toFixed(2);
 
-            // DOKÜMAN SAYFA 9: VaR HESABI 
-            // X-Lojistik örneğinde 1.2 SME ve 1M ciro için 2.2M VaR öngörülmüştür.
-            // Formül kalibrasyonu: (SME * Ciro * 1.5 Sabiti) + (KVKK risk çarpanı)
             let varResult = (revenue * sme * 1.833);
             
             document.getElementById('var_res').innerText = "₺" + Math.round(varResult).toLocaleString('tr-TR');
 
-            // TEMİNAT EŞLEŞTİRME [cite: 86]
             const list = document.getElementById('teminatlar');
             list.innerHTML = "";
             const recs = [];
