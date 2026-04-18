@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME Formül Rehberi | Batuhan BAYATLI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; }
+        .formula-card { background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 24px; }
+        .sme-badge { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); }
+        input[type=range] { -webkit-appearance: none; background: #334155; height: 6px; border-radius: 5px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #38bdf8; cursor: pointer; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-black mb-2">SME Formülü Nasıl Çalışır?</h1>
+            <p class="text-slate-400">Siber Maruziyet Endeksi Değerlendirme Modeli</p>
+            <div class="mt-4 text-xs font-mono text-sky-500">Geliştirici: Batuhan BAYATLI | linkedin.com/in/batuhanbayatlı</div>
+        </header>
+
+        <div class="formula-card p-8 mb-10 text-center">
+            <div class="text-sm uppercase tracking-[0.3em] text-slate-500 mb-4">Temel Formülasyon [s.7]</div>
+            <div class="text-3xl md:text-5xl font-mono font-bold tracking-tighter">
+                SME = (V × T × C) · α
+            </div>
+            <p class="mt-6 text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
+                Bu formül, kurumun dijital dünyadaki "ağırlığını" ve "savunma gücünü" tek bir puanda birleştirir.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="space-y-8">
+                <div>
+                    <label class="block text-sm font-bold mb-3 flex justify-between">
+                        V (Zayıflık) <span id="v_val" class="text-sky-400">0.8</span>
+                    </label>
+                    <input type="range" id="v_s" min="0.1" max="1" step="0.1" value="0.8" class="w-full">
+                    <p class="text-[10px] text-slate-500 mt-2 italic">Sistemdeki açıklar ve personel hataları. [s.7]</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-3 flex justify-between">
+                        T (Tehdit) <span id="t_val" class="text-sky-400">1.5</span>
+                    </label>
+                    <input type="range" id="t_s" min="1" max="2" step="0.1" value="1.5" class="w-full">
+                    <p class="text-[10px] text-slate-500 mt-2 italic">Sektörünüze yönelik saldırı sıklığı. [s.7]</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-3 flex justify-between">
+                        C (Kritiklik) <span id="c_val" class="text-sky-400">2.0</span>
+                    </label>
+                    <input type="range" id="c_s" min="1" max="2" step="0.5" value="2" class="w-full">
+                    <p class="text-[10px] text-slate-500 mt-2 italic">Verinizin maddi ve yasal değeri. [s.7]</p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold mb-3 flex justify-between">
+                        α (Direnç/Reaksiyon) <span id="a_val" class="text-sky-400">0.5</span>
+                    </label>
+                    <input type="range" id="a_s" min="0.1" max="1" step="0.1" value="0.5" class="w-full">
+                    <p class="text-[10px] text-slate-500 mt-2 italic">Saldırıdan sonra toparlanma hızı. [s.7]</p>
+                </div>
+            </div>
+
+            <div class="formula-card p-10 flex flex-col justify-center items-center relative overflow-hidden">
+                <div class="text-[10px] uppercase font-bold text-slate-500 mb-2">Hesaplanan Endeks Puanı</div>
+                <div id="sme_final" class="text-7xl font-black">1.20</div>
+                
+                <div id="status_box" class="mt-8 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest bg-red-500/20 text-red-400">
+                    Kritik Maruziyet
+                </div>
+
+                <div class="mt-10 w-full space-y-3">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase">Analiz Özeti:</p>
+                    <div id="summary" class="text-xs text-slate-400 leading-relaxed italic">
+                        "Bu katsayı, prim miktarınızı ve teminat limitlerinizi doğrudan belirleyen ana değişkendir." [s.7]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateSME() {
+            const v = parseFloat(document.getElementById('v_s').value);
+            const t = parseFloat(document.getElementById('t_s').value);
+            const c = parseFloat(document.getElementById('c_s').value);
+            const a = parseFloat(document.getElementById('a_s').value);
+
+            document.getElementById('v_val').innerText = v.toFixed(1);
+            document.getElementById('t_val').innerText = t.toFixed(1);
+            document.getElementById('c_val').innerText = c.toFixed(1);
+            document.getElementById('a_val').innerText = a.toFixed(1);
+
+            const sme = (v * t * c) * a;
+            const display = document.getElementById('sme_final');
+            display.innerText = sme.toFixed(2);
+
+            const status = document.getElementById('status_box');
+            if(sme > 1.0) {
+                status.innerText = "Yüksek Maruziyet";
+                status.className = "mt-8 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest bg-red-500/20 text-red-400";
+                display.className = "text-7xl font-black text-red-500";
+            } else if(sme > 0.5) {
+                status.innerText = "Orta Maruziyet";
+                status.className = "mt-8 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest bg-yellow-500/20 text-yellow-400";
+                display.className = "text-7xl font-black text-yellow-500";
+            } else {
+                status.innerText = "Düşük Maruziyet";
+                status.className = "mt-8 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest bg-green-500/20 text-green-400";
+                display.className = "text-7xl font-black text-green-500";
+            }
+        }
+
+        document.querySelectorAll('input').forEach(i => i.addEventListener('input', updateSME));
+        updateSME();
+    </script>
+</body>
+</html>

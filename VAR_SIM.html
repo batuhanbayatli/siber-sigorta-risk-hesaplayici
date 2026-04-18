@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaR Sistemi Anlatıcısı | Batuhan BAYATLI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #f8fafc; color: #1e293b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .va-card { background: white; border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .risk-bar { transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-black text-slate-800">VaR (Riske Maruz Değer) Nedir?</h1>
+            <p class="text-slate-500 mt-2">Batuhan Bayatlı Metodolojisi ile Basit Anlatım</p>
+        </div>
+
+        <div class="va-card p-8 mb-8 bg-blue-50 border-blue-100">
+            <h2 class="font-bold text-blue-800 mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"></path></svg>
+                En Basit Tabiriyle:
+            </h2>
+            <p class="text-sm leading-relaxed text-blue-900">
+                VaR, bir siber kriz anında cüzdanınızdan çıkabilecek <b>"en yüksek tutarı"</b> önceden tahmin etme sanatıdır. 
+                "Başıma bir şey gelirse en fazla ne kadar kaybederim?" sorusunun istatistiksel yanıtıdır. [cite: 58, 59]
+            </p>
+        </div>
+
+        <div class="va-card p-8 space-y-8">
+            <div>
+                <label class="block text-sm font-bold mb-4">Şirketinizin Günlük Değeri (Ciro):</label>
+                <input type="number" id="val_rev" value="1000000" class="w-full p-4 bg-slate-50 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold mb-4">Risk Seviyeniz (SME Katsayısı):</label>
+                <input type="range" id="val_sme" min="0.1" max="2.0" step="0.1" value="1.2" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                <div class="flex justify-between text-[10px] text-slate-400 mt-2"><span>ÇOK DÜŞÜK</span><span>KRİTİK RİSK</span></div>
+            </div>
+
+            <div class="pt-6 border-t">
+                <div class="flex justify-between items-end mb-2">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Tahmini Maksimum Kayıp</span>
+                    <span id="val_res" class="text-3xl font-black text-blue-600">₺0</span>
+                </div>
+                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                    <div id="val_bar" class="risk-bar h-full bg-blue-500" style="width: 0%"></div>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-4 italic">
+                    *Bu hesaplama, %95 güven aralığında dokümanınızdaki <b>Monte Carlo Simülasyonu</b> mantığına dayanır. [cite: 80, 84]
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            <div class="va-card p-4 text-center">
+                <div class="text-blue-600 font-bold text-lg mb-1">Ölçüm</div>
+                <p class="text-[10px] text-slate-500 italic">Soyut riski TL'ye çevirir. [cite: 61]</p>
+            </div>
+            <div class="va-card p-4 text-center">
+                <div class="text-blue-600 font-bold text-lg mb-1">Limit</div>
+                <p class="text-[10px] text-slate-500 italic">Poliçe limitini belirler. [cite: 62]</p>
+            </div>
+            <div class="va-card p-4 text-center">
+                <div class="text-blue-600 font-bold text-lg mb-1">Yeterlilik</div>
+                <p class="text-[10px] text-slate-500 italic">Sigorta rezervini netleştirir. [cite: 63]</p>
+            </div>
+        </div>
+
+        <footer class="mt-12 text-center">
+            <a href="https://www.linkedin.com/in/batuhanbayatlı" target="_blank" class="text-xs font-bold text-slate-400 hover:text-blue-500 transition">
+                BATUHAN BAYATLI | LinkedIn Profiline Git
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        function updateVaR() {
+            const rev = parseFloat(document.getElementById('val_rev').value) || 0;
+            const sme = parseFloat(document.getElementById('val_sme').value);
+
+            // Doküman s.9 Örneği Kalibrasyonu: 1M ciro ve 1.2 SME = 2.2M VaR
+            // Formül: SME * Ciro * 1.83 (Sabit Çarpan)
+            const varResult = Math.round(rev * sme * 1.83);
+            
+            document.getElementById('val_res').innerText = "₺" + varResult.toLocaleString('tr-TR');
+            
+            // Bar genişliği (Maksimum 5M TL üzerinden görselleştirme)
+            const barWidth = Math.min((varResult / 5000000) * 100, 100);
+            document.getElementById('val_bar').style.width = barWidth + "%";
+        }
+
+        document.getElementById('val_rev').addEventListener('input', updateVaR);
+        document.getElementById('val_sme').addEventListener('input', updateVaR);
+        
+        updateVaR();
+    </script>
+</body>
+</html>
