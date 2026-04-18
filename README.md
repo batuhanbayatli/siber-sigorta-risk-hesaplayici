@@ -6,7 +6,7 @@ Bu proje, geleneksel siber sigortacılık yaklaşımlarını dinamik, matematiks
 
 - **Dinamik SME Hesaplayıcı:** Zayıflık (V), Tehdit (T), Kritiklik (C) ve Direnç ($\alpha$) parametrelerini kullanarak kuruma özel risk katsayısı oluşturur.
 - **Cyber-VaR Modellemesi:** %95 güven aralığında, olası bir saldırı anında oluşabilecek maksimum finansal hasarı Monte Carlo simülasyon mantığıyla tahmin eder.
-- **Anadolu Sigorta Entegrasyonu:** Hesaplanan risk skoruna göre Anadolu Sigorta'nın siber ürün gamından (İş Durması, KVKK Cezaları, Veri Koruma vb.) en uygun teminat eşleşmelerini yapar.
+- **Anadolu Sigorta Entegrasyonu:** Hesaplanan risk skoruna göre siber ürün gamından (İş Durması, KVKK Cezaları, Veri Koruma vb.) en uygun teminat eşleşmelerini yapar.
 - **Modern UI/UX:** Glassmorphism ve Silent Luxury estetiğiyle tasarlanmış, yönetici dostu interaktif dashboard.
 
 ## 📂 Proje Yapısı
