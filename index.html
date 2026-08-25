@@ -3,157 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siber Risk Kontrol Merkezi | Batuhan BAYATLI</title>
+    <title>Siber Sigorta Risk Değerlendirme Modeli // RiskOptima Labs</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        surface: {
+                            base: '#f8fafc',
+                            card: '#ffffff',
+                            border: '#e2e8f0',
+                            hover: '#f1f5f9',
+                            muted: '#64748b',
+                            dark: '#0f172a'
+                        },
+                        cyber: {
+                            blue: '#0284c7',
+                            sky: '#38bdf8',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            rose: '#ef4444',
+                            indigo: '#4f46e5'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root { --accent: #38bdf8; }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #020617; 
-            color: #f8fafc; 
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .bg-glow {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            animation: pulse 10s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-10%, -10%) scale(1); }
-            100% { transform: translate(10%, 10%) scale(1.2); }
-        }
-
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            background: rgba(30, 41, 59, 0.3);
-        }
-
-        .nav-card:hover {
-            background: rgba(56, 189, 248, 0.05);
-            border-color: var(--accent);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.15);
-        }
-
-        .linkedin-badge {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 119, 181, 0.3);
-        }
-
-        .linkedin-badge:hover {
-            background: #0077b5;
-            border-color: transparent;
-            transform: rotate(-2deg);
-        }
-
-        .glitch-text {
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+        * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        input[type=range] { -webkit-appearance: none; background: #e2e8f0; height: 6px; border-radius: 4px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 18px; width: 18px; border-radius: 50%; background: #0284c7; cursor: pointer; box-shadow: 0 0 10px rgba(2, 132, 199, 0.3); }
     </style>
 </head>
-<body>
-    <div class="bg-glow"></div>
-    
-    <main class="relative z-10 w-full max-w-7xl px-6">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-            <div class="space-y-2">
-                <h2 class="text-sky-400 font-bold tracking-[0.4em] text-xs uppercase opacity-80">Dashboard v2.0</h2>
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter glitch-text">
-                    Siber Risk <span class="text-white/20">Mimarisi</span>
-                </h1>
-                <p class="text-slate-500 max-w-md text-sm font-light">Siber güvenlik sigortalarının matematiksel ve stratejik modelleme merkezi.</p>
-            </div>
+<body class="bg-surface-base text-surface-dark min-h-screen flex flex-col antialiased selection:bg-cyber-blue selection:text-white">
 
-            <div class="flex items-center gap-6 p-2 pr-6 glass-panel rounded-full border border-white/5">
-                <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-xl shadow-lg">
-                    BB
+    
+    <header class="border-b border-surface-border bg-surface-card sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-surface-dark flex items-center justify-center text-white shadow-md shadow-slate-900/10">
+                    <i data-lucide="shield-alert" class="w-5 h-5 text-sky-400"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-lg leading-none">Batuhan BAYATLI</h3>
-                    <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Geliştirici & Analist</p>
+                    <div class="flex items-center gap-2">
+                        <span class="font-extrabold text-base sm:text-lg tracking-tight text-surface-dark">Cyber<span class="text-cyber-blue">VaR</span> &amp; SME Engine</span>
+                        <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-sky-50 text-cyber-blue border border-sky-200">bGroup // RiskOptima Labs</span>
+                    </div>
+                    <p class="text-[11px] text-surface-muted hidden sm:block">Siber Güvenlik Sigortaları Matematiksel Risk ve Finansal Maruziyet Platformu</p>
                 </div>
-                <a href="https://www.linkedin.com/in/batuhanbayatlı" target="_blank" class="linkedin-badge p-2 rounded-lg ml-4">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </a>
             </div>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <a href="BASIT_ANLATIM.html" target="_blank" class="nav-card p-8 rounded-3xl h-72 flex flex-col justify-between group">
-                <div class="space-y-4">
-                    <div class="w-10 h-10 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400 group-hover:bg-sky-500 group-hover:text-white transition-all">
-                        01
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight">Akademi</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Siber güvenliğin temellerini ve CIA üçlüsünü keşfedin.</p>
-                </div>
-                <div class="text-[10px] font-black uppercase tracking-widest text-sky-500 opacity-0 group-hover:opacity-100 transition-all">Giriş Yap</div>
-            </a>
+            <nav class="hidden md:flex items-center gap-1 bg-surface-base p-1 rounded-xl border border-surface-border">
+                <button onclick="switchTab('calculator')" id="tab-calculator" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-surface-card text-surface-dark shadow-sm border border-surface-border transition flex items-center gap-2">
+                    <i data-lucide="calculator" class="w-3.5 h-3.5 text-cyber-blue"></i> SME &amp; VaR Hesaplayıcı
+                </button>
+                <button onclick="switchTab('matrix')" id="tab-matrix" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-surface-muted hover:text-surface-dark transition flex items-center gap-2">
+                    <i data-lucide="grid" class="w-3.5 h-3.5"></i> Teminat Matrisi
+                </button>
+                <button onclick="switchTab('academy')" id="tab-academy" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-surface-muted hover:text-surface-dark transition flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Metodoloji &amp; Terimler
+                </button>
+            </nav>
 
-            <a href="TAM_SISTEM.html" target="_blank" class="nav-card p-8 rounded-3xl h-72 flex flex-col justify-between group">
-                <div class="space-y-4">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
-                        02
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight">Risk Matrisi</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Tehdit senaryoları ve Anadolu Sigorta teminat eşleşmeleri.</p>
+           
+            <a href="https://www.linkedin.com/in/batuhanbayatlı" target="_blank" class="flex items-center gap-2.5 pl-3 border-l border-surface-border hover:opacity-85 transition">
+                <img src="https://avatars.githubusercontent.com/u/255363609?v=4" class="w-9 h-9 rounded-full border border-surface-border shadow-sm object-cover" alt="Batuhan Bayatlı">
+                <div class="hidden lg:block text-left">
+                    <div class="text-xs font-extrabold text-surface-dark leading-tight">Batuhan Bayatlı</div>
+                    <div class="text-[10px] text-cyber-blue font-semibold leading-tight">InsurTech &amp; FinTech Specialist</div>
                 </div>
-                <div class="text-[10px] font-black uppercase tracking-widest text-indigo-500 opacity-0 group-hover:opacity-100 transition-all">Analizi Aç</div>
             </a>
-
-            <a href="VAR_SIM.html" target="_blank" class="nav-card p-8 rounded-3xl h-72 flex flex-col justify-between group">
-                <div class="space-y-4">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                        03
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight">VaR Analizi</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Monte Carlo tabanlı maksimum finansal zarar simülasyonu.</p>
-                </div>
-                <div class="text-[10px] font-black uppercase tracking-widest text-emerald-500 opacity-0 group-hover:opacity-100 transition-all">Simüle Et</div>
-            </a>
-
-            <a href="SME_FORMULU.html" target="_blank" class="nav-card p-8 rounded-3xl h-72 flex flex-col justify-between group">
-                <div class="space-y-4">
-                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-all">
-                        04
-                    </div>
-                    <h4 class="text-xl font-bold tracking-tight">SME Modeli</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Dinamik maruziyet endeksi ve prim çarpanı hesaplayıcı.</p>
-                </div>
-                <div class="text-[10px] font-black uppercase tracking-widest text-rose-500 opacity-0 group-hover:opacity-100 transition-all">Formülü İncele</div>
-            </a>
-
         </div>
+    </header>
 
-        <div class="mt-20 flex justify-between items-center text-[10px] text-slate-600 uppercase tracking-[0.2em] font-bold">
-            <div>© 2026 Siber Güvenlik Sigortası Metodolojisi</div>
-            <div class="flex gap-4">
-                <span>Doküman Kaynağı: s.1-12</span>
-                <span class="text-sky-500/50">||</span>
-                <span>TR</span>
+    
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        
+        <section id="view-calculator" class="space-y-6">
+            
+            
+            <div class="bg-surface-card border border-surface-border shadow-sm rounded-2xl p-6 relative overflow-hidden">
+                <div class="max-w-3xl">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-cyber-blue">Aktüeryal Formülasyon [Doküman s.7]</span>
+                    <h2 class="text-2xl sm:text-3xl font-black font-mono mt-1 text-surface-dark tracking-tight">SME = (V × T × C) · α</h2>
+                    <p class="text-xs text-surface-muted font-medium mt-2 leading-relaxed">
+                        Kurumun teknik zayıflık katsayısını (V), sektörel tehdit frekansını (T), işlenen verinin kritiklik derecesini (C) ve saldırı anındaki toparlanma hızını (α) tek bir matematiksel puanda birleştirir.
+                    </p>
+                </div>
+                <div class="absolute -right-8 -bottom-8 opacity-5">
+                    <i data-lucide="cpu" class="w-48 h-48 text-surface-dark"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                
+                <div class="lg:col-span-7 bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-6">
+                    <h3 class="text-sm font-bold text-surface-dark flex items-center gap-2 border-b border-surface-border pb-3">
+                        <i data-lucide="sliders" class="w-4 h-4 text-cyber-blue"></i> Maruziyet ve Finansal Parametreler
+                    </h3>
+
+                    <div class="space-y-5">
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                <span>V // Teknik Zayıflık ve Açıklar (Vulnerability)</span>
+                                <span id="v_text" class="text-cyber-blue font-mono font-bold">0.8</span>
+                            </div>
+                            <input type="range" id="v_input" min="0.1" max="1" step="0.1" value="0.8" class="w-full">
+                            <div class="flex justify-between text-[10px] text-surface-muted font-semibold mt-1"><span>0.1 (Yüksek Güvenlik)</span><span>1.0 (Eski / Arkaik Sistem)</span></div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                <span>T // Sektörel Tehdit Seviyesi (Threat Level)</span>
+                                <span id="t_text" class="text-cyber-blue font-mono font-bold">1.5</span>
+                            </div>
+                            <input type="range" id="t_input" min="1.0" max="2.0" step="0.1" value="1.5" class="w-full">
+                            <div class="flex justify-between text-[10px] text-surface-muted font-semibold mt-1"><span>1.0 (Düşük Tehdit)</span><span>2.0 (Hedef Sektör: Finans, Sağlık)</span></div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                <span>C // Veri Kritikliği ve Regülasyon (Criticality)</span>
+                                <span id="c_text" class="text-cyber-blue font-mono font-bold">2.0</span>
+                            </div>
+                            <select id="c_input" class="w-full bg-surface-base border border-surface-border rounded-xl p-2.5 text-xs text-surface-dark font-semibold outline-none focus:border-cyber-blue">
+                                <option value="1.0">1.0 — Standart Kurumsal Bilgiler</option>
+                                <option value="1.5">1.5 — Müşteri Veritabanı ve İletişim Bilgileri</option>
+                                <option value="2.0" selected>2.0 — KVKK, Kredi Kartı ve Finansal Kayıtlar</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                <span>α // Direnç ve Reaksiyon Hızı (Recovery Factor)</span>
+                                <span id="a_text" class="text-cyber-blue font-mono font-bold">0.5</span>
+                            </div>
+                            <input type="range" id="a_input" min="0.1" max="1.0" step="0.1" value="0.5" class="w-full">
+                            <div class="flex justify-between text-[10px] text-surface-muted font-semibold mt-1"><span>0.1 (Anında Yedekten Dönüş)</span><span>1.0 (Haftalar Süren Kesinti)</span></div>
+                        </div>
+
+                        <div class="pt-3 border-t border-surface-border">
+                            <label class="block text-xs font-bold mb-2">Kurum Günlük Ciro Hacmi (₺)</label>
+                            <div class="relative">
+                                <input type="number" id="rev_input" value="1000000" min="10000" step="50000" class="w-full bg-surface-base border border-surface-border rounded-xl p-3 text-xs font-mono font-bold text-surface-dark outline-none focus:border-cyber-blue">
+                                <span class="absolute right-4 top-3 text-xs text-surface-muted font-bold">₺</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm relative overflow-hidden">
+                        <div class="text-[10px] uppercase tracking-widest font-bold text-surface-muted">Siber Maruziyet Endeksi</div>
+                        <div class="flex items-baseline gap-3 mt-2">
+                            <div id="sme_score" class="text-5xl font-black font-mono text-cyber-blue">1.20</div>
+                            <span id="sme_badge" class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-rose-50 text-cyber-rose border border-rose-200">Kritik Maruziyet</span>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-surface-border space-y-2">
+                            <div class="text-[10px] uppercase tracking-widest font-bold text-surface-muted">Cyber-VaR // Maksimum Finansal Hasar (%95 Güven)</div>
+                            <div id="var_amount" class="text-3xl font-black font-mono text-surface-dark">₺2.200.000</div>
+                            <p class="text-[11px] text-surface-muted italic">
+                                *Monte Carlo simülasyon yaklaşımıyla, olası bir saldırı anında oluşabilecek doğrudan ve dolaylı finansal kayıp projeksiyonu [Doküman s.8].
+                            </p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-surface-muted flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-cyber-blue"></i> Otomatik Poliçe Teminat Önerisi
+                        </h4>
+                        <div id="recs_container" class="space-y-2">
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+        <section id="view-matrix" class="hidden space-y-6">
+            <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-4">
+                <h3 class="text-base font-bold flex items-center gap-2 text-surface-dark">
+                    <i data-lucide="grid" class="w-5 h-5 text-cyber-blue"></i> Sektörel Teminat ve Tehdit Eşleştirme Matrisi
+                </h3>
+                <p class="text-xs text-surface-muted leading-relaxed">
+                    Siber risk analizi neticesinde hesaplanan faktörlerin, poliçe kapsamındaki teminat karşılıkları:
+                </p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-surface-base text-surface-muted uppercase font-bold text-[10px] border-y border-surface-border">
+                            <tr>
+                                <th class="p-3">Risk Faktörü</th>
+                                <th class="p-3">Senaryo / Tehdit</th>
+                                <th class="p-3">Önerilen Sigorta Teminatı</th>
+                                <th class="p-3">Sektörel Karşılık</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-surface-border font-medium">
+                            <tr>
+                                <td class="p-3 font-bold text-surface-dark">İş Sürekliliği Kesintisi</td>
+                                <td class="p-3 text-surface-muted">Ransomware saldırısı ile sunucuların kilitlenmesi</td>
+                                <td class="p-3 font-mono font-bold text-cyber-blue">İş Durması Teminatı</td>
+                                <td class="p-3 text-surface-muted">Sabit giderler ve kâr kaybı telafisi</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-surface-dark">Veri İhlali ve KVKK</td>
+                                <td class="p-3 text-surface-muted">Müşteri kimlik ve kredi kartı verisinin sızdırılması</td>
+                                <td class="p-3 font-mono font-bold text-cyber-blue">İdari Para Cezaları &amp; Hukuksal Koruma</td>
+                                <td class="p-3 text-surface-muted">Düzenleyici kurum cezaları</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-surface-dark">Sistem ve Veri Bozulması</td>
+                                <td class="p-3 text-surface-muted">Veritabanının silinmesi veya bozulması</td>
+                                <td class="p-3 font-mono font-bold text-cyber-blue">Veri Koruma ve Kurtarma Hasarı</td>
+                                <td class="p-3 text-surface-muted">Adli bilişim ve veri kurtarma masrafları</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-surface-dark">Şantaj ve Tehdit</td>
+                                <td class="p-3 text-surface-muted">Sistemlerin açılması için kripto para fidye talebi</td>
+                                <td class="p-3 font-mono font-bold text-cyber-blue">Siber Fidye &amp; Müzakere Desteği</td>
+                                <td class="p-3 text-surface-muted">Kriz yönetimi ve danışmanlık</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        
+        <section id="view-academy" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-2">
+                    <div class="text-xs font-bold text-cyber-blue font-mono">01 // Gizlilik (Confidentiality)</div>
+                    <p class="text-xs text-surface-muted font-medium leading-relaxed">
+                        Verinin yalnızca yetkili kişilerce erişilebilir olmasını garanti eder. İhlalinde KVKK ve itibar riskleri doğar.
+                    </p>
+                </div>
+                <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-2">
+                    <div class="text-xs font-bold text-cyber-blue font-mono">02 // Bütünlük (Integrity)</div>
+                    <p class="text-xs text-surface-muted font-medium leading-relaxed">
+                        Verinin yetkisiz şekilde değiştirilmesini veya silinmesini önler. Finansal tablolar ve kayıt bütünlüğü için esastır.
+                    </p>
+                </div>
+                <div class="bg-surface-card p-6 rounded-2xl border border-surface-border shadow-sm space-y-2">
+                    <div class="text-xs font-bold text-cyber-blue font-mono">03 // Erişilebilirlik (Availability)</div>
+                    <p class="text-xs text-surface-muted font-medium leading-relaxed">
+                        Sistemlerin ihtiyaç anında kesintisiz çalışabilmesidir. DDoS ve ransomware saldırıları doğrudan bu unsuru hedefler.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    
+    <footer class="mt-auto border-t border-surface-border bg-surface-card py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="https://avatars.githubusercontent.com/u/255363609?v=4" alt="Batuhan Bayatlı" class="w-11 h-11 rounded-full border border-surface-border shadow-sm">
+                <div>
+                    <div class="text-xs font-bold text-surface-dark">Batuhan Bayatlı</div>
+                    <div class="text-[11px] text-surface-muted font-medium">InsurTech &amp; FinTech Specialist | SEGEM | Japanese &amp; English</div>
+                </div>
+            </div>
+            <div class="text-center md:text-right">
+                <div class="text-xs font-extrabold text-surface-dark">RiskOptima Labs // bGroup Ecosystem</div>
+                <div class="text-[11px] text-surface-muted">Siber Güvenlik Sigortaları Risk Değerlendirmesi Dokümantasyonu baz alınmıştır.</div>
             </div>
         </div>
-    </main>
+    </footer>
+
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            calculateModel();
+
+            document.querySelectorAll("input, select").forEach(el => {
+                el.addEventListener("input", calculateModel);
+            });
+        });
+
+        function calculateModel() {
+            const v = parseFloat(document.getElementById("v_input").value);
+            const t = parseFloat(document.getElementById("t_input").value);
+            const c = parseFloat(document.getElementById("c_input").value);
+            const a = parseFloat(document.getElementById("a_input").value);
+            const rev = parseFloat(document.getElementById("rev_input").value) || 0;
+
+            document.getElementById("v_text").innerText = v.toFixed(1);
+            document.getElementById("t_text").innerText = t.toFixed(1);
+            document.getElementById("c_text").innerText = c.toFixed(1);
+            document.getElementById("a_text").innerText = a.toFixed(1);
+
+            
+            const sme = (v * t * c) * a;
+            document.getElementById("sme_score").innerText = sme.toFixed(2);
+
+            const badge = document.getElementById("sme_badge");
+            if (sme > 1.0) {
+                badge.innerText = "Kritik Maruziyet";
+                badge.className = "px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-rose-50 text-cyber-rose border border-rose-200";
+            } else if (sme > 0.5) {
+                badge.innerText = "Orta Düzey Risk";
+                badge.className = "px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-amber-50 text-cyber-amber border border-amber-200";
+            } else {
+                badge.innerText = "Düşük / Güvenli";
+                badge.className = "px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-emerald-50 text-cyber-emerald border border-emerald-200";
+            }
+
+            
+            const varLoss = Math.round(rev * sme * 1.833);
+            document.getElementById("var_amount").innerText = "₺" + varLoss.toLocaleString("tr-TR");
+
+            
+            const recsContainer = document.getElementById("recs_container");
+            recsContainer.innerHTML = "";
+            const list = [];
+
+            if (sme > 0.9) list.push({ name: "İş Durması & Sabit Gider Telafisi", reason: "Yüksek operasyonel durma riski" });
+            if (c >= 1.5) list.push({ name: "KVKK & İdari Para Cezaları Teminatı", reason: "Kritik veri varlığı ve yasal sorumluluk" });
+            if (v >= 0.6) list.push({ name: "Veri Koruma & Sistem Kurtarma", reason: "Teknik açık ve yedekleme gecikmesi" });
+            if (rev > 500000) list.push({ name: "Bilgi Güvenliği & Gizlilik Sorumluluğu", reason: "Büyük ölçekli ticari ciro hacmi" });
+
+            if (list.length === 0) list.push({ name: "Temel Siber Güvenlik Koruması", reason: "Düşük maruziyet profili" });
+
+            list.forEach(item => {
+                const row = document.createElement("div");
+                row.className = "p-2.5 rounded-xl bg-surface-base border border-surface-border text-xs flex justify-between items-center";
+                row.innerHTML = `
+                    <span class="font-bold text-surface-dark">${item.name}</span>
+                    <span class="text-[10px] text-cyber-blue font-semibold">${item.reason}</span>
+                `;
+                recsContainer.appendChild(row);
+            });
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll(".tab-btn").forEach(b => {
+                b.className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-surface-muted hover:text-surface-dark transition flex items-center gap-2";
+            });
+            document.getElementById("view-calculator").classList.add("hidden");
+            document.getElementById("view-matrix").classList.add("hidden");
+            document.getElementById("view-academy").classList.add("hidden");
+
+            if (tab === "calculator") {
+                document.getElementById("tab-calculator").className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-surface-card text-surface-dark shadow-sm border border-surface-border transition flex items-center gap-2";
+                document.getElementById("view-calculator").classList.remove("hidden");
+            } else if (tab === "matrix") {
+                document.getElementById("tab-matrix").className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-surface-card text-surface-dark shadow-sm border border-surface-border transition flex items-center gap-2";
+                document.getElementById("view-matrix").classList.remove("hidden");
+            } else {
+                document.getElementById("tab-academy").className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold bg-surface-card text-surface-dark shadow-sm border border-surface-border transition flex items-center gap-2";
+                document.getElementById("view-academy").classList.remove("hidden");
+            }
+            lucide.createIcons();
+        }
+    </script>
 </body>
 </html>
